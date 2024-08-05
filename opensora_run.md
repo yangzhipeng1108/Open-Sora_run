@@ -1,18 +1,18 @@
-1.下载项目
+# 1.下载项目
 
 git clone https://github.com/hpcaitech/Open-Sora
 cd Open-Sora
 
-2.构建镜像
+# 2.构建镜像
 docker build -t opensora .
 
-3.运行容器
+# 3.运行容器
 docker run  -dt --name opensora --restart=always --shm-size 100G  --gpus all -v /root/sora/Open-Sora:/workspace/Open-Sora opensora
 docker stop opensora
 docker rm opensora
 docker exec -it opensora bash
 
-4.容器内安装软件
+# 4.容器内安装软件
 pip install scenedetect
 pip install imageio_ffmpeg
 pip install git+https://github.com/openai/CLIP.git
@@ -27,7 +27,7 @@ git lfs install
 git lfs clone https://huggingface.co/liuhaotian/llava-v1.6-mistral-7b
 git lfs clone https://huggingface.co/DeepFloyd/t5-v1_1-xxl
 
-5.数据处理
+# 5.数据处理
 
 5.1可以从youtube上下载视频 也下载数据集
 mkdir /workspace/Open-Sora/data/
@@ -120,7 +120,7 @@ df = df[['path','text']].merge(df1)
 df.to_csv('meta_clips_caption_text.csv')
 
 
-6.重新运行容器
+# 6.重新运行容器
 docker stop opensora
 docker rm opensora
 docker run  -dt --name opensora --restart=always --shm-size 100G  --gpus all -v /root/sora/Open-Sora:/workspace/Open-Sora opensora
@@ -130,18 +130,18 @@ export ROOT_VIDEO="/workspace/Open-Sora/data/data_vedio"
 export ROOT_CLIPS="/workspace/Open-Sora/data/clips"
 export ROOT_META="/workspace/Open-Sora/data"
 
-7.训练
+# 7.训练
 torchrun --standalone --nproc_per_node 8 scripts/train.py configs/opensora-v1-2/train/stage3.py \
  --data-path ${ROOT_META}/meta_clips_caption_text.csv
 
-# one node
+## one node
 torchrun --standalone --nproc_per_node 8 scripts/train.py \
     configs/opensora-v1-2/train/stage1.py --data-path ${ROOT_META}/meta_clips_caption_text.csv --ckpt-path YOUR_PRETRAINED_CKPT
-# multiple nodes
+## multiple nodes
 colossalai run --nproc_per_node 8 --hostfile hostfile scripts/train.py \
     configs/opensora-v1-2/train/stage1.py ---data-path ${ROOT_META}/meta_clips_caption_text.csv --ckpt-path YOUR_PRETRAINED_CKPT
 
-8.推理
+# 8.推理
 CUDA_VISIBLE_DEVICES=0,1 torchrun --nproc_per_node 2 scripts/inference.py configs/opensora-v1-2/inference/sample.py \
   --num-frames 4s --resolution 720p --aspect-ratio 9:16 \
   --prompt "a beautiful waterfall"
