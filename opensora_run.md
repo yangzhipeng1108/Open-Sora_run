@@ -29,7 +29,7 @@ git lfs clone https://huggingface.co/DeepFloyd/t5-v1_1-xxl
 
 # 5.数据处理
 
-5.1可以从youtube上下载视频 也下载数据集
+## 5.1可以从youtube上下载视频 也下载数据集
 mkdir /workspace/Open-Sora/data/
 mkdir /workspace/Open-Sora/data/data_vedio
 pip install git+https://github.com/yt-dlp/yt-dlp.git
@@ -38,7 +38,7 @@ yt-dlp https://www.youtube.com/watch?v=srRaCkQVvR0
 下载视频 -> /workspace/Open-Sora/data/data_vedio
 需要把下载视频改成MP4格式
 
-5.2处理视频
+## 5.2处理视频
 申明环境变量
 export ROOT_VIDEO="/workspace/Open-Sora/data/data_vedio"
 export ROOT_CLIPS="/workspace/Open-Sora/data/clips"
