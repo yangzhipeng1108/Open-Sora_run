@@ -1,6 +1,7 @@
 # 1.下载项目
 
 git clone https://github.com/hpcaitech/Open-Sora
+
 cd Open-Sora
 
 # 2.构建镜像
