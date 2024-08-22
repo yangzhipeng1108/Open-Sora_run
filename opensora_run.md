@@ -9,8 +9,11 @@ docker build -t opensora .
 
 # 3.运行容器
 docker run  -dt --name opensora --restart=always --shm-size 100G  --gpus all -v /root/sora/Open-Sora:/workspace/Open-Sora opensora
+
 docker stop opensora
+
 docker rm opensora
+
 docker exec -it opensora bash
 
 # 4.容器内安装软件
