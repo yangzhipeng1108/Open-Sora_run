@@ -18,25 +18,37 @@ docker exec -it opensora bash
 
 # 4.容器内安装软件
 pip install scenedetect
+
 pip install imageio_ffmpeg
+
 pip install git+https://github.com/openai/CLIP.git
+
 pip install git+https://github.com/haotian-liu/LLaVA.git
 
 下载llava-v1.6-mistral-7b 
 mkdir /workspace/Open-Sora/model_ckpt
+
 cd /workspace/Open-Sora/model_ckpt
+
 curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+
 sudo apt-get install git-lfs
+
 git lfs install
+
 git lfs clone https://huggingface.co/liuhaotian/llava-v1.6-mistral-7b
+
 git lfs clone https://huggingface.co/DeepFloyd/t5-v1_1-xxl
 
 # 5.数据处理
 
 ## 5.1可以从youtube上下载视频 也下载数据集
 mkdir /workspace/Open-Sora/data/
+
 mkdir /workspace/Open-Sora/data/data_vedio
+
 pip install git+https://github.com/yt-dlp/yt-dlp.git
+
 yt-dlp https://www.youtube.com/watch?v=srRaCkQVvR0
 
 下载视频 -> /workspace/Open-Sora/data/data_vedio
