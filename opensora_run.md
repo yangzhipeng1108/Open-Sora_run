@@ -26,6 +26,7 @@ pip install git+https://github.com/openai/CLIP.git
 pip install git+https://github.com/haotian-liu/LLaVA.git
 
 下载llava-v1.6-mistral-7b 
+
 mkdir /workspace/Open-Sora/model_ckpt
 
 cd /workspace/Open-Sora/model_ckpt
@@ -57,7 +58,9 @@ yt-dlp https://www.youtube.com/watch?v=srRaCkQVvR0
 ## 5.2处理视频
 申明环境变量
 export ROOT_VIDEO="/workspace/Open-Sora/data/data_vedio"
+
 export ROOT_CLIPS="/workspace/Open-Sora/data/clips"
+
 export ROOT_META="/workspace/Open-Sora/data"
 
 5.2.1.1 从视频文件夹创建元文件
@@ -87,12 +90,17 @@ torchrun --nproc_per_node 8 -m tools.scoring.aesthetic.inference \
 No such file or directory: 'pretrained_models/aesthetic.pth' 解决方案
 
 mkdir /workspace/Open-Sora/model_ckpt/pretrained_models/
+
 cd /workspace/Open-Sora/model_ckpt/pretrained_models/
+
 wget https://github.com/christophschuhmann/improved-aesthetic-predictor/raw/main/sac+logos+ava1-l14-linearMSE.pth -O /workspace/Open-Sora/model_ckpt/pretrained_models/aesthetic.pth
+
 修改inference.py代码 
+
 151行改为model.mlp.load_state_dict(torch.load("/workspace/Open-Sora/model_ckpt/pretrained_models/aesthetic.pth", map_location=device))
 
 cd /workspace/Open-Sora/
+
 pip install -e .
 
 
@@ -130,16 +138,21 @@ data_merge.py内容为：
 import pandas as pd
 
 df  = pd.read_csv('meta_clips_caption_cleaned.csv')
+
 df1 = pd.read_csv('meta_clips_info_fmin1_aes.csv')
 
 df = df[['path','text']].merge(df1)
+
 df.to_csv('meta_clips_caption_text.csv')
 
 
 # 6.重新运行容器
 docker stop opensora
+
 docker rm opensora
+
 docker run  -dt --name opensora --restart=always --shm-size 100G  --gpus all -v /root/sora/Open-Sora:/workspace/Open-Sora opensora
+
 docker exec -it opensora bash
 
 export ROOT_VIDEO="/workspace/Open-Sora/data/data_vedio"
