@@ -156,7 +156,9 @@ docker run  -dt --name opensora --restart=always --shm-size 100G  --gpus all -v 
 docker exec -it opensora bash
 
 export ROOT_VIDEO="/workspace/Open-Sora/data/data_vedio"
+
 export ROOT_CLIPS="/workspace/Open-Sora/data/clips"
+
 export ROOT_META="/workspace/Open-Sora/data"
 
 # 7.训练
